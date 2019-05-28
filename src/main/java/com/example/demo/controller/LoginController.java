@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 @Controller
 public class LoginController {
 
+    @RequestMapping("/")
+    public String login1() {
+        return "/login";
+    }
 
     @RequestMapping("/hello")
     public String hello() {

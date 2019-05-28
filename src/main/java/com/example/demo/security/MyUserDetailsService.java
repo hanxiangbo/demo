@@ -4,15 +4,13 @@ import com.example.demo.model.MyJwtUser;
 import com.example.demo.model.SysUser;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Collection;
 
 /**
  * Created with IDEA
@@ -33,8 +31,7 @@ public class MyUserDetailsService implements UserDetailsService {
         if (sysUser == null) {
             throw new UsernameNotFoundException(String.format("%s.这个用户不存在", username));
         }
-        //List<SimpleGrantedAuthority> authorities = sysUser.getRoles().stream().map(Role::getRolename).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
-        //return new MyJwtUser(sysUser.getUsername(), sysUser.getPassword(), sysUser.getState(), authorities);
-        return null;
+        Collection<? extends GrantedAuthority> authorities = sysUser.getAuthorities();
+        return new MyJwtUser(sysUser.getUsername(), sysUser.getPassword(), authorities);
     }
 }

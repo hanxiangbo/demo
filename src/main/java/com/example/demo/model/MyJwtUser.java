@@ -14,7 +14,7 @@ import java.util.Collection;
  * @Description:
  */
 @Data
-public class MyJwtUser implements UserDetails {
+public class MyJwtUser extends SysUser implements UserDetails {
 
     private String username;
 
